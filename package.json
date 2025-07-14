@@ -1,0 +1,20 @@
+{
+  "name": "churrasqueiro-ja",
+  "version": "1.0.0",
+  "description": "Sistema inteligente de planejamento de churrasco com IA",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "serve -s src -l 3000",
+    "build": "echo 'Build complete - static site ready'",
+    "dev": "serve -s src -l 3000"
+  },
+  "keywords": ["ia", "churrasco", "planejamento", "openai", "n8n"],
+  "author": "LucasFelipeJesus",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

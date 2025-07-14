@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churrasqueiro Já: Planejador Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sistema inteligente que utiliza IA para gerar cardápios personalizados de churrasco. Planeje seu evento perfeito com recomendações precisas e responsáveis.">
+    <meta name="keywords" content="churrasco, IA, inteligência artificial, planejamento, cardápio, OpenAI, n8n">
+    <meta name="author" content="LucasFelipeJesus">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Churrasqueiro Já - Planejador Inteligente">
+    <meta property="og:description" content="Sistema inteligente que utiliza IA para gerar cardápios personalizados de churrasco">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/D9534F/FFFFFF?text=Churrasqueiro+Já">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Churrasqueiro Já - Planejador Inteligente">
+    <meta name="twitter:description" content="Sistema inteligente que utiliza IA para gerar cardápios personalizados de churrasco">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+    
+    <!-- Application Structure & Styling -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .accent-bg { background-color: #D9534F; }
+        .accent-text { color: #D9534F; }
+        .accent-border { border-color: #D9534F; }
+        .secondary-bg { background-color: #F3E9E0; }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #D9534F;
+            border-bottom-color: #D9534F;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .btn-filter.active {
+            background-color: #D9534F;
+            color: white;
+            border-color: #D9534F;
+        }
+        .tech-card:hover .tech-card-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #D9534F;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold accent-text">Churrasqueiro Já</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#solucao" class="nav-link font-semibold">A Solução</a>
+                <a href="#tecnologia" class="nav-link font-semibold">Tecnologia</a>
+                <a href="#ia-playground" class="nav-link font-semibold">Experimente a IA</a>
+                <a href="#responsabilidade" class="nav-link font-semibold">Responsabilidade</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32 secondary-bg">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">O Fim do Estresse no Planejamento do Seu Churrasco.</h2>
+                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">Utilizamos Inteligência Artificial para criar o cardápio perfeito para o seu evento, de forma personalizada, eficiente e responsável. Descubra como transformamos ideias em experiências gastronômicas memoráveis.</p>
+            </div>
+        </section>
+
+        <section id="solucao" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Do Problema à Solução Inteligente</h3>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-600">Identificamos os maiores desafios na organização de um churrasco e desenvolvemos funcionalidades específicas para resolvê-los. Clique em um problema para ver como o "Churrasqueiro Já" atua.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div id="problems-container" class="space-y-4">
+                        <div class="problem-card p-6 border rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105" data-target="solution-1">
+                            <h4 class="text-xl font-bold mb-2">🤔 Cálculo de Quantidades</h4>
+                            <p>A eterna dúvida de quanto comprar, resultando em desperdício ou, pior, falta de comida.</p>
+                        </div>
+                        <div class="problem-card p-6 border rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105" data-target="solution-2">
+                            <h4 class="text-xl font-bold mb-2">🍽️ Variedade e Seleção</h4>
+                            <p>A dificuldade de escolher cortes e acompanhamentos que agradem a todos os paladares.</p>
+                        </div>
+                        <div class="problem-card p-6 border rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105" data-target="solution-3">
+                            <h4 class="text-xl font-bold mb-2">💸 Adaptação e Restrições</h4>
+                            <p>O desafio de ajustar o cardápio a orçamentos, preferências e restrições alimentares.</p>
+                        </div>
+                    </div>
+                    <div id="solutions-container" class="relative min-h-[200px]">
+                        <div id="solution-placeholder" class="solution-content flex items-center justify-center h-full text-center p-8 border-2 border-dashed rounded-lg text-gray-500">
+                            <p class="text-lg">Clique em um problema ao lado para ver a solução.</p>
+                        </div>
+                        <div id="solution-1" class="solution-content hidden absolute top-0 w-full p-8 secondary-bg rounded-lg shadow-lg">
+                            <h4 class="text-2xl font-bold accent-text mb-3">Cálculo Preciso</h4>
+                            <p class="text-lg">Nosso sistema estima as quantidades ideais por número de convidados, considerando o perfil do evento para evitar sobras e garantir a satisfação de todos.</p>
+                        </div>
+                        <div id="solution-2" class="solution-content hidden absolute top-0 w-full p-8 secondary-bg rounded-lg shadow-lg">
+                            <h4 class="text-2xl font-bold accent-text mb-3">Recomendação Personalizada</h4>
+                            <p class="text-lg">Geramos cardápios completos e equilibrados com base no perfil do evento, sugerindo harmonizações e variedades que surpreendem positivamente.</p>
+                        </div>
+                        <div id="solution-3" class="solution-content hidden absolute top-0 w-full p-8 secondary-bg rounded-lg shadow-lg">
+                            <h4 class="text-2xl font-bold accent-text mb-3">Flexibilidade Total</h4>
+                            <p class="text-lg">A IA se adapta a orçamentos específicos, considera preferências e ajusta o cardápio automaticamente para atender restrições alimentares, de forma inclusiva e inteligente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tecnologia" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Nossa Arquitetura de Inteligência</h3>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-600">Um ecossistema de tecnologias de ponta orquestrado para entregar recomendações precisas e contextuais.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div id="architecture-image-container" class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center h-96 lg:h-full">
+                        <div class="text-center text-gray-500">
+                            <svg class="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            <p class="mt-2 font-semibold">Área para Imagem da Arquitetura</p>
+                            <p class="text-sm">Substitua este bloco pela sua imagem.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="tech-card bg-white p-6 rounded-lg shadow-lg text-center relative overflow-hidden">
+                            <div class="text-4xl mb-4">⚙️</div>
+                            <h4 class="text-xl font-bold">n8n</h4>
+                            <p class="text-gray-500 font-semibold">Orquestrador</p>
+                            <div class="tech-card-content absolute bottom-0 left-0 w-full bg-black/80 text-white p-4 opacity-0 transform translate-y-full transition-all duration-300">
+                               Plataforma de automação que gerencia todo o fluxo de trabalho.
+                            </div>
+                        </div>
+                        <div class="tech-card bg-white p-6 rounded-lg shadow-lg text-center relative overflow-hidden">
+                            <div class="text-4xl mb-4">🧠</div>
+                            <h4 class="text-xl font-bold">OpenAI API</h4>
+                            <p class="text-gray-500 font-semibold">Cérebro Criativo</p>
+                             <div class="tech-card-content absolute bottom-0 left-0 w-full bg-black/80 text-white p-4 opacity-0 transform translate-y-full transition-all duration-300">
+                               Fornece os modelos de linguagem para gerar as recomendações.
+                            </div>
+                        </div>
+                        <div class="tech-card bg-white p-6 rounded-lg shadow-lg text-center relative overflow-hidden">
+                            <div class="text-4xl mb-4">🔗</div>
+                            <h4 class="text-xl font-bold">Embeddings Vetoriais</h4>
+                            <p class="text-gray-500 font-semibold">Contexto</p>
+                             <div class="tech-card-content absolute bottom-0 left-0 w-full bg-black/80 text-white p-4 opacity-0 transform translate-y-full transition-all duration-300">
+                               Sistema que analisa a similaridade e aprende com dados históricos.
+                            </div>
+                        </div>
+                        <div class="tech-card bg-white p-6 rounded-lg shadow-lg text-center relative overflow-hidden">
+                            <div class="text-4xl mb-4">📚</div>
+                            <h4 class="text-xl font-bold">Banco de Dados Vetorial</h4>
+                            <p class="text-gray-500 font-semibold">Memória</p>
+                             <div class="tech-card-content absolute bottom-0 left-0 w-full bg-black/80 text-white p-4 opacity-0 transform translate-y-full transition-all duration-300">
+                               Armazena o conhecimento sobre cortes, receitas e preços.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ia-playground" class="py-16 md:py-24 secondary-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Experimente a Magia da IA ✨</h3>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-600">Descreva o seu evento abaixo e deixe que a nossa inteligência artificial crie uma sugestão de cardápio exclusiva para si.</p>
+                </div>
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="adultos" class="block text-lg font-semibold text-gray-700 mb-2">Número de Adultos:</label>
+                            <input type="number" id="adultos" min="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-D9534F focus:border-transparent transition" placeholder="Ex: 40">
+                        </div>
+                        <div>
+                            <label for="criancas" class="block text-lg font-semibold text-gray-700 mb-2">Número de Crianças:</label>
+                            <input type="number" id="criancas" min="0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-D9534F focus:border-transparent transition" placeholder="Ex: 6">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="tipo-evento" class="block text-lg font-semibold text-gray-700 mb-2">Tipo de Evento:</label>
+                        <select id="tipo-evento" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-D9534F focus:border-transparent transition">
+                            <option value="">Selecione o tipo de evento</option>
+                            <option value="Familiar">Familiar</option>
+                            <option value="Corporativo">Corporativo</option>
+                            <option value="Aniversário">Aniversário</option>
+                            <option value="Confraternização">Confraternização</option>
+                            <option value="Casamento">Casamento</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-lg font-semibold text-gray-700 mb-3">Restrições Alimentares:</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Vegetariano" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Vegetariano</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Vegano" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Vegano</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Sem Glúten" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Sem Glúten</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Sem Lactose" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Sem Lactose</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Diabético" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Diabético</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="Hipertenso" class="restricao-checkbox mr-2 accent-D9534F">
+                                <span>Hipertenso</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="generate-menu-btn" class="w-full accent-bg text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center">
+                        <span class="mr-2">✨ Gerar Sugestão de Cardápio</span>
+                    </button>
+                    <div id="menu-result" class="mt-6 p-6 border-t border-gray-200 min-h-[100px]">
+                        <p class="text-gray-500 text-center">A sua sugestão de cardápio aparecerá aqui...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="responsabilidade" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Nosso Compromisso com a IA Responsável</h3>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-600">A inovação só tem valor quando é construída sobre uma base sólida de ética, privacidade e justiça. Explore nossos pilares de responsabilidade.</p>
+                </div>
+
+                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                    <button class="btn-filter active px-4 py-2 md:px-6 md:py-3 font-semibold border-2 accent-border rounded-full transition" data-content="etica">Ética</button>
+                    <button class="btn-filter px-4 py-2 md:px-6 md:py-3 font-semibold border-2 accent-border rounded-full transition" data-content="privacidade">Privacidade</button>
+                    <button class="btn-filter px-4 py-2 md:px-6 md:py-3 font-semibold border-2 accent-border rounded-full transition" data-content="vies">Viés Algorítmico</button>
+                </div>
+
+                <div class="grid md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <div class="chart-container">
+                            <canvas id="responsibilityChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="responsibility-content" class="md:col-span-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="secondary-bg py-12">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <h4 class="text-2xl font-bold accent-text">Churrasqueiro Já</h4>
+            <p class="mt-2">Transformando o planejamento de churrascos com inteligência e responsabilidade.</p>
+            <p class="mt-4 text-sm">&copy; 2025 Churrasqueiro Já. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

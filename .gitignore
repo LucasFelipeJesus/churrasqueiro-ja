@@ -31,6 +31,13 @@ node_modules/
 # Dependency directories
 jspm_packages/
 
+# Build files (keep source in src/)
+# public/
+
+# Package lock files
+package-lock.json
+yarn.lock
+
 # Optional npm cache directory
 .npm
 
