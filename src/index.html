@@ -143,14 +143,14 @@
                     <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-600">Um ecossistema de tecnologias de ponta orquestrado para entregar recomendações precisas e contextuais.</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div id="architecture-image-container" class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center h-96 lg:h-full">
-                        <div class="text-center text-gray-500">
-                            <svg class="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            <p class="mt-2 font-semibold">Área para Imagem da Arquitetura</p>
-                            <p class="text-sm">Substitua este bloco pela sua imagem.</p>
-                        </div>
+                    <div id="architecture-image-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <img 
+                            src="../arquitetura.jpeg" 
+                            alt="Arquitetura do Sistema Churrasqueiro Já - Fluxo de IA com n8n, OpenAI API, Embeddings Vetoriais e Banco de Dados Vetorial" 
+                            class="w-full h-full object-contain p-4"
+                            loading="lazy"
+                            onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-96 text-gray-500\'><div class=\'text-center\'><p class=\'font-semibold\'>Erro ao carregar imagem</p><p class=\'text-sm\'>arquitetura.jpeg não encontrada</p></div></div>'"
+                        />
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="tech-card bg-white p-6 rounded-lg shadow-lg text-center relative overflow-hidden">
