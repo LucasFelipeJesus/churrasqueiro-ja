@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const response = await fetch(
-                "https://n8nflow-dvd3a6duhwchaxen.eastus-01.azurewebsites.net/webhook/churrasco-menu",
+                "https://lucas-jesus.app.n8n.cloud/webhook/churrasco-menu",
                 {
                     method: "POST",
                     headers: {
